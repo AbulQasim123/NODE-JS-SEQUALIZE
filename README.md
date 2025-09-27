@@ -376,8 +376,3 @@ sequelize.sync({ force: false })
 * Use `--to` with care when targeting specific migrations.
 
 ---
-
-If you want, I can also:
-
-* provide a ready `.sequelizerc` + `config/config.js` pair for MySQL or Postgres, or
-* give example CI commands (GitHub Actions) to run migrations during deploy.
