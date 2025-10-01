@@ -1,43 +1,32 @@
-'use strict';
+const sequelize = require('../config/db');
+const UserModel = require('./user');
+const ProfileModel = require('./profile');
+const PostModel = require('./post');
+const RoleModel = require('./role');
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const process = require('process');
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
-const db = {};
+const User = UserModel(sequelize);
+const Profile = ProfileModel(sequelize);
+const Post = PostModel(sequelize);
+const Role = RoleModel(sequelize);
 
-let sequelize;
-if (config.use_env_variable) {
-	sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-	sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+// Associations
 
-fs
-	.readdirSync(__dirname)
-	.filter(file => {
-		return (
-			file.indexOf('.') !== 0 &&
-			file !== basename &&
-			file.slice(-3) === '.js' &&
-			file.indexOf('.test.js') === -1
-		);
-	})
-	.forEach(file => {
-		const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-		db[model.name] = model;
-	});
+// One-to-One: User <-> Profile
+User.hasOne(Profile, { foreignKey: 'userId', as: 'profile', onDelete: 'CASCADE' });
+Profile.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
-Object.keys(db).forEach(modelName => {
-	if (db[modelName].associate) {
-		db[modelName].associate(db);
-	}
-});
+// One-to-Many: User -> Post
+User.hasMany(Post, { foreignKey: 'userId', as: 'posts', onDelete: 'CASCADE' });
+Post.belongsTo(User, { foreignKey: 'userId', as: 'author' });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+// Many-to-Many: User <-> Role via UserRoles
+User.belongsToMany(Role, { through: 'UserRoles', as: 'roles' });
+Role.belongsToMany(User, { through: 'UserRoles', as: 'users' });
 
-module.exports = db;
+module.exports = {
+    sequelize,
+    User,
+    Profile,
+    Post,
+    Role
+};

@@ -1,4 +1,4 @@
-# We are going to write about NodeJs Sequelize
+# We are going to write about NodeJs Express with Sequelize and Sequelize-cli
 
 This single-file **complete step-by-step guide** shows how to set up Node.js with Sequelize and `sequelize-cli`, and covers *everything* from project creation to migrations, models, seeders, running/reverting migrations, and deployment tips.
 
