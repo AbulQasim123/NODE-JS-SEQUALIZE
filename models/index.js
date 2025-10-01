@@ -24,9 +24,9 @@ User.belongsToMany(Role, { through: 'UserRoles', as: 'roles' });
 Role.belongsToMany(User, { through: 'UserRoles', as: 'users' });
 
 module.exports = {
-    sequelize,
-    User,
-    Profile,
-    Post,
-    Role
+  sequelize,
+  User,
+  Profile,
+  Post,
+  Role
 };
