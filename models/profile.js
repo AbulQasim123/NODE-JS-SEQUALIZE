@@ -9,7 +9,6 @@ module.exports = (sequelize) => {
         },
         bio: { type: DataTypes.TEXT, allowNull: true },
         avatarUrl: { type: DataTypes.STRING, allowNull: true },
-        registeredAt: { type: DataTypes.DATE, allowNull: false } // store register time here too
     });
 
     return Profile;

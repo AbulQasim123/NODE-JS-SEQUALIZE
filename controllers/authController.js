@@ -36,7 +36,7 @@ const register = async (req, res) => {
         const now = new Date();
 
         const user = await User.create({ name, email, password: hashed, registeredAt: now });
-        await Profile.create({ bio: bio || null, avatarUrl: avatarUrl || null, userId: user.id, registeredAt: now });
+        await Profile.create({ bio: bio || null, avatarUrl: avatarUrl || null, userId: user.id});
 
         const defaultRole = await Role.findOne({ where: { name: 'admin' } });
         if (defaultRole) await user.addRole(defaultRole);
