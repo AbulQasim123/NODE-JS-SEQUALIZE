@@ -1,3 +1,0 @@
-one-to-one relationship and reverse relationship User and Profile Model
-one-to-many relationship and reverse relationship User and Post Model
-manay-to-many relationship and reverse relationship Make yourself
